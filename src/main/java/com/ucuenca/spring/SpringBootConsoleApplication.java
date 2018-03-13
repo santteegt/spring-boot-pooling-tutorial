@@ -4,6 +4,7 @@ package com.ucuenca.spring;
 import com.ucuenca.spring.dao.CustomerRepository;
 import com.ucuenca.spring.model.Customer;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ import java.util.List;
 
 import static java.lang.System.exit;
 
-@SpringBootApplication
+//@SpringBootApplication
 public class SpringBootConsoleApplication implements CommandLineRunner {
 
     @Autowired
@@ -29,8 +30,11 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
         System.out.println("DATASOURCE = " + dataSource);
 
         // If you want to check the HikariDataSource settings
-        //HikariDataSource newds = (HikariDataSource)dataSource;
-        //System.out.println("DATASOURCE = " + newds.getMaximumPoolSize());
+        if(dataSource instanceof HikariDataSource) {
+            HikariDataSource newds = (HikariDataSource)dataSource;
+            System.out.println("USING DATASOURCE WITH HIKARICP -> Max pool size = " + newds.getMaximumPoolSize());
+        }
+
 
 
         if (args.length <= 0) {
